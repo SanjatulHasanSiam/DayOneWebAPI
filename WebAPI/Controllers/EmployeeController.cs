@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ namespace WebAPI.Controllers
 	[ApiController]
 	public class EmployeeController : ControllerBase
 	{
+		[Authorize]
 		[HttpGet]
 		[Route("employee-list")]
 		public async Task<IActionResult> GetAllEmployees()
@@ -22,8 +24,8 @@ namespace WebAPI.Controllers
 
 		}
 
-
-		[HttpGet("{id:int}")]
+		[Authorize]
+		[HttpGet("get-details/{id}")]
 		//[Route("employee-details")]
 		public async Task<IActionResult> GetEmployees(int id)
 		{
@@ -38,6 +40,7 @@ namespace WebAPI.Controllers
 			}
 
 		}
+		[Authorize]
 		[HttpPost]
 		[Route("add-employee")]
 		public async Task<IActionResult> AddEmployeeDetails(EmployeeDetail employeeDetail)
@@ -61,7 +64,7 @@ namespace WebAPI.Controllers
 			}
 
 		}
-
+		[Authorize]
 		[HttpDelete("delete-employee-details/{id}")]
 		public async Task<IActionResult> RemoveEmployeeDetails(int id)
 		{
@@ -78,7 +81,7 @@ namespace WebAPI.Controllers
 			}
 
 		}
-
+		[Authorize]
 		[HttpPut("update-employee-details/{id}")]
 		public async Task<IActionResult> UpdateEmployeeDetails(int id, [FromBody] EmployeeDetail employeeDetail)
 		{
