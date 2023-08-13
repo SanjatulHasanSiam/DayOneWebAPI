@@ -20,12 +20,12 @@ namespace WebAPI.Controllers
 
 		private Users AuthenticateUser(Users user)
 		{
-			Users _user = null;
+			Users? newUser = null;
 			if(user.Username=="admin" && user.Password == "12345")
 			{
-				_user = new Users {Username="manoj Deshmal"};
+				newUser = new Users {Username="sanjatul hasan"};
 			}
-			return _user;
+			return newUser;
 		}
 
 
@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
 			var securitykey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
 			var credentials = new SigningCredentials(securitykey,SecurityAlgorithms.HmacSha256);
 			var token = new JwtSecurityToken(_config["Jwt:Issuer"], _config["Jwt:Audience"],null,
-				expires:DateTime.Now.AddMinutes(10));
+				expires:DateTime.Now.AddMinutes(10),signingCredentials:credentials);
 			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
 
